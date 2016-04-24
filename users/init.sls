@@ -290,10 +290,6 @@ users_ssh_config_{{ name }}:
     - contents: |
         # Managed by Saltstack
         # Do Not Edit
-        # Defaults
-        {%- for opts in setting.get('defoptions') %}
-        {{ opts }}
-        {%- endfor %}
         {% for label, setting in user.ssh_config.items() %}
         # {{ label }}
         Host {{ setting.get('hostname') }}
@@ -393,10 +389,10 @@ users_{{ users.sudoers_dir }}/{{ name }}:
     - require:
       - file: users_sudoer-defaults
       - file: users_sudoer-{{ name }}
-  cmd.wait:
+  cmd.wait:                                                                           
     - name: visudo -cf {{ users.sudoers_dir }}/{{ name }} || ( rm -rvf {{ users.sudoers_dir }}/{{ name }}; exit 1 )
-    - watch:
-      - file: {{ users.sudoers_dir }}/{{ name }}
+    - watch:                                                                         
+      - file: {{ users.sudoers_dir }}/{{ name }}   
 {% endif %}
 {% else %}
 users_{{ users.sudoers_dir }}/{{ name }}:
