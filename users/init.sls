@@ -76,7 +76,7 @@ users_{{ name }}_user:
   user.present:
     - name: {{ name }}
     - home: {{ home }}
-    - shell: {{ user.get('shell', users.get('shell', '/bin/bash')) }}
+    - shell: {{ pillar['pkgs'][user.shell] }}
     {% if 'uid' in user -%}
     - uid: {{ user['uid'] }}
     {% endif -%}
